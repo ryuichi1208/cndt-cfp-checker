@@ -17,12 +17,15 @@ func main() {
 	if err != nil {
 		panic("htmlの取得に失敗しました")
 	}
+
+	var cnt int
 	title := doc.Find("body#page-top > div#wrapper > div.container > div.row > table.table > tbody > tr")
-	// fmt.Println(title.Html())
 	title.Each(func(i int, s *goquery.Selection) {
 		author := s.Find(fmt.Sprintf("td.td-class-%d > ul", i+1))
 		author.Each(func(i int, s *goquery.Selection) {
+			cnt++
 			fmt.Println(standardizeSpaces(s.Text()))
 		})
 	})
+	fmt.Println("合計:", cnt, " 件")
 }
